@@ -1,58 +1,54 @@
-var svg;
-var statCount = {
-						"technology": {},
-						"workshop": {},
-						"living": {},
-						"food": {},
-						"play": {},
-						"outside": {}					
-					};
-
-var setChannels = function(counter, metaData) {
-	for (var category in metaData){
-		for (var i = 0; i < metaData[category].length; i++){
-			counter[category][metaData[category][i].title] = {};
-			counter[category][metaData[category][i].title].entries = 0;
-			counter[category][metaData[category][i].title].views = 0;
-		}
-	}
-	return "setChannels finished"
-}
-
-var countChannels = function(counter, data) {
-	for (var i = 0; i < data.items.length; i++){
-		if (counter[data.items[i].category][data.items[i].channel]){
-			counter[data.items[i].category][data.items[i].channel].entries ++;
-			counter[data.items[i].category][data.items[i].channel].views += data.items[i].views;
-		}
-	}
-	return "countChannels finished";
-}
-
-var processItems = function(counter, metaData, data){
-	setChannels(counter, metaData);
-	countChannels(counter, data);
-	return counter;
-}
-
-statCount = (processItems(statCount, categories, items));
 
 
+var channelArray = mkChannelArray(categories, data.items);
+var categoryArray = mkCategoryArray(categories, channelArray);
 
-	//Width and height
-var WIDTH = 500;
-var HEIGHT = 100;
+window.addEventListener("load", function() {
 
-var svg = d3.select("body")
-	 		.append("svg")
-	 		.attr("width", WIDTH)
-	 		.attr("height", HEIGHT);
+	var WIDTH = 400;
+	var HEIGHT = 600;
+	var BAR_PADDING = 4;
 
-svg.selectAll("rect")
-   .data([1,1,1])
-   .enter()
-   .append("rect")
-   .attr("x", 0)
-   .attr("y", 0)
-   .attr("width", 20)
-   .attr("height", 100);
+	var svg = d3.select("body")
+				.append("svg")
+				.attr("width", WIDTH)
+				.attr("height", HEIGHT);
+
+	svg.selectAll("rect")
+		.data(categoryArray)
+		.enter()
+		.append("rect")
+		.on("click", function(d) {
+			explodeCategory(d);
+		})
+		.attr("fill", function(d,i){
+			return '#'+Math.floor(Math.random()*16777215).toString(16);
+		})
+		.attr("x", function(d,i) {
+			return i * WIDTH / categoryArray.length;
+		})
+		.attr("y", function(d,i) {
+			return HEIGHT - d.totalViews/500;
+		})
+		.attr("width", WIDTH / categoryArray.length - BAR_PADDING)
+		.attr("height", function(d,i) {
+			return d.totalViews/500;
+		});
+
+	svg.selectAll("text")
+		.data(categoryArray)
+		.enter()
+		.append("text")
+		.attr("fill", "black")
+		.attr("x", function(d,i) {
+			return i * WIDTH / categoryArray.length;
+		})
+		.attr("y", function(d,i) {
+			return HEIGHT - d.totalViews/500;
+		})
+		.text(function(d){
+			return d.name;
+		});
+
+
+});
