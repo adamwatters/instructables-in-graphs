@@ -1,7 +1,7 @@
 var explodeCategory = function(category) {
 	console.log(category);
 	var WIDTH = 600;
-	var HEIGHT = 600;
+	var HEIGHT = 700;
 	var BAR_PADDING = 10;
 
 	var svgTwo = d3.select("body")
@@ -9,10 +9,38 @@ var explodeCategory = function(category) {
 				.attr("width", WIDTH)
 				.attr("height", HEIGHT);
 
+	var cScale = d3.scale.linear()
+						.domain([0,d3.max(category.channels, function(d){
+							return d.views;
+						})])
+						.range([20,150])
+
+	var circles = svgTwo.selectAll("circle")
+                          .data(category.channels)
+                          .enter()
+                          .append("circle")
+                          .on("click", function(d) {
+							console.log(d);
+						  })
+                          .attr("cx", function (d){
+                          	return Math.random() * WIDTH;
+                          })
+                          .attr("cy", function (){
+                          	return Math.random() * HEIGHT;
+                          })
+                          .attr("r", function (d){
+                          	return cScale(d.views);
+                          })
+                          .attr("fill", function(){
+                          	return '#'+Math.floor(Math.random()*16777215).toString(16);
+                          })
+
+
+
 	svgTwo.selectAll("rect")
 		.data(category.channels)
 		.enter()
-		.append("rect")
+		.append("circle")
 		.on("click", function(d) {
 			console.log(d.name);
 		})
