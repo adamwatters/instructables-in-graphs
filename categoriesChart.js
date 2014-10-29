@@ -15,7 +15,7 @@ var makeCategoryChart = function(root) {
 
 
  	var node = svg.selectAll(".node")
-      .data(bubble.nodes(root))
+      .data(bubble.nodes(root)
       .filter(function(d) { return !d.children; }))
     .enter().append("g")
       .attr("class", "node")
