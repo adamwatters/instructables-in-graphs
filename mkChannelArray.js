@@ -7,6 +7,7 @@ var mkChannelArray = function (categories, items) {
 		this.category = category;
 		this.items = 0;
 		this.views = 0;
+		this.value = 0;
 	}
 
 	var setChannels = function (channelArray, categories) {
@@ -27,6 +28,7 @@ var mkChannelArray = function (categories, items) {
 				{
 					channelArray[i].items ++;
 					channelArray[i].views += items[item].views;
+					channelArray[i].value += items[item].views;
 				}
 			}
 		}

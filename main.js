@@ -5,6 +5,7 @@ var categoryArray = mkCategoryArray(categories, channelArray);
 
 window.addEventListener("load", function() {
 
+
 	var WIDTH = 400;
 	var HEIGHT = 600;
 	var BAR_PADDING = 4;
