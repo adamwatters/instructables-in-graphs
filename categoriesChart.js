@@ -1,6 +1,4 @@
-
-
-var explodeCategory = function(category) {
+var makeCategoryChart = function(root) {
 
 	var diameter = 960;
 		color = d3.scale.category20c();
@@ -17,7 +15,7 @@ var explodeCategory = function(category) {
 
 
  	var node = svg.selectAll(".node")
-      .data(bubble.nodes(category)
+      .data(bubble.nodes(root))
       .filter(function(d) { return !d.children; }))
     .enter().append("g")
       .attr("class", "node")
