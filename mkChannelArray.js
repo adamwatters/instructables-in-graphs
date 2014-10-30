@@ -5,9 +5,10 @@ var mkChannelArray = function (categories, items) {
 	var Channel = function (name, category) {
 		this.name = name;
 		this.category = category;
+		this.instructables = [];
 		this.items = 0;
 		this.views = 0;
-		this.value = 0;
+		this.nextLevel = "instructables";
 	}
 
 	var setChannels = function (channelArray, categories) {
@@ -28,7 +29,7 @@ var mkChannelArray = function (categories, items) {
 				{
 					channelArray[i].items ++;
 					channelArray[i].views += items[item].views;
-					channelArray[i].value += items[item].views;
+					channelArray[i].instructables.push(items[item]);
 				}
 			}
 		}

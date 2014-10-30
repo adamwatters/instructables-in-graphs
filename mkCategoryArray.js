@@ -4,9 +4,10 @@ var mkCategoryArray = function(categories, channelArray){
 
 	var Category = function (name) {
 		this.name = name;
-		this.children = [];
+		this.channels = [];
 		this.totalItems = 0;
-		this.totalViews = 0;
+		this.views = 0;
+		this.nextLevel = "channels";
 	};
 
 	var setCategories = function (categoryArray, categories) {
@@ -20,9 +21,10 @@ var mkCategoryArray = function(categories, channelArray){
 		for (var i = 0; i < categoryArray.length; i++) {
 			for (var j = 0; j < channelArray.length; j++){
 				if (categoryArray[i].name === channelArray[j].category){
-					categoryArray[i].children.push(channelArray[j]);
+					categoryArray[i].channels.push(channelArray[j]);
 					categoryArray[i].totalItems += channelArray[j].items;
-					categoryArray[i].totalViews += channelArray[j].views;
+					categoryArray[i].views += channelArray[j].views;
+
 				}
 			}
 		}

@@ -5,6 +5,6 @@ var categoryArray = mkCategoryArray(categories, channelArray);
 
 window.addEventListener("load", function() {
 
-	makeCategoryChart({children: categoryArray});
+	makeChart({cats: categoryArray}, "cats");
 
 });

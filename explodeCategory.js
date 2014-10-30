@@ -8,7 +8,13 @@ var explodeCategory = function(category) {
 	var bubble = d3.layout.pack()
     .sort(null)
     .size([diameter, diameter])
-    .padding(1.5);
+    .padding(1.5)
+    .children(function(d) {
+      return d.channels;
+    })
+    .value(function(d){
+      return d.views;
+    })
 
 	var svg = d3.select("body").append("svg")
     .attr("width", diameter)
@@ -18,7 +24,7 @@ var explodeCategory = function(category) {
 
  	var node = svg.selectAll(".node")
       .data(bubble.nodes(category)
-      .filter(function(d) { return !d.children; }))
+      .filter(function(d) { return !d.children }))
     .enter().append("g")
       .attr("class", "node")
       .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
