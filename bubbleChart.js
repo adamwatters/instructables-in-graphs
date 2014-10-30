@@ -53,16 +53,18 @@ var makeChart = function(root, lookFor) {
       .text(function(d) { return d.name? d.name : d.title});
 
     if (!lookFor) {
-
+      node.on("click", function(d){
+                  makeChart({cats: categoryArray}, "cats");
+                })
       console.log("picture");
       node.append("image")
-          .attr('x',60)
-          .attr('y',60)
+          .attr('x', 0)
+          .attr('y', 0)
           .attr('width', function(d){
-            return d.r / 2;
+            return d.r;
           })
           .attr('height', function(d){
-            return d.r / 2;
+            return d.r;
           })
           .attr("xlink:href",function(d){
             console.log(d);
